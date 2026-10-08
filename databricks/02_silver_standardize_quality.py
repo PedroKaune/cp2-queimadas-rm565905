@@ -45,7 +45,7 @@ df_silver = (
     .filter(F.col("lat").isNotNull() & F.col("lon").isNotNull())    
 )
 
-df_silver.write.mode("append").saveAsTable("INPE.silver.queimadas_focos")
+df_silver.write.mode("overwrite").option("overwriteSchema", "true").saveAsTable("INPE.silver.queimadas_focos")
 
 df_quality = df_silver.select(
     count(when(col("id").isNull(), 1)).alias("id_nulo"),
